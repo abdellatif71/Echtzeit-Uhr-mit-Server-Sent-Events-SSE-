@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echtzeit-Uhr mit SSE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .clock {
+            font-size: 3rem;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Server-Sent Events (SSE) Echtzeit-Uhr</h1>
+    <div class="clock">Wird geladen...</div>
+
+    <script>
+        // Verbindung zum SSE-Server herstellen
+        const eventSource = new EventSource("http://localhost:3000/time");
+
+        eventSource.onmessage = (event) => {
+            document.querySelector(".clock").innerText = event.data;
+        };
+
+        eventSource.onerror = (error) => {
+            console.log("SSE-Fehler:", error);
+        };
+    </script>
+
+</body>
+</html>
